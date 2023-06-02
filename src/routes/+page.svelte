@@ -90,7 +90,7 @@
 	</details>
 
 	<label for="businessCosts">Betriebsausgeben pro Jahr</label>
-	<input type="number" bind:value={businessCosts} id="businessCosts" />
+	<input type="number" bind:value={businessCosts} id="businessCosts" readonly disabled />
 	<table>
 		<tr
 			><th>Betriebsausgabe</th>
@@ -159,16 +159,16 @@
 <fieldset>
 	<legend>Calculated</legend>
 	<label for="daylieTurnover">Tagesverdienst</label>
-	<input type="string" bind:value={daylieTurnover} id="daylieTurnover" disabled />
+	<input type="string" bind:value={daylieTurnover} id="daylieTurnover" readonly disabled />
 
 	<label for="yearlyTurnover">Jahresverdienst</label>
-	<input type="string" bind:value={yearlyTurnover} id="yearlyTurnover" disabled />
+	<input type="string" bind:value={yearlyTurnover} id="yearlyTurnover" readonly disabled />
 
 	<label for="incomeBeforeTax">Einkommen vor Steuer</label>
-	<input type="string" bind:value={incomeBeforeTax} id="incomeBeforeTax" disabled />
+	<input type="string" bind:value={incomeBeforeTax} id="incomeBeforeTax" readonly disabled />
 
 	<label for="income">Einkommen nach Steuer</label>
-	<input type="string" bind:value={income} id="income" disabled />
+	<input type="string" bind:value={income} id="income" readonly disabled />
 </fieldset>
 
 <style>

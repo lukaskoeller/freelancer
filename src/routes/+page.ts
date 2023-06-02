@@ -33,7 +33,13 @@ export async function load({ fetch, url }) {
     if (new Date() > new Date('2024/01/16')) throw Error('The current used request url is not valid anymore. Please ask the maintainer to update it.');
 
     const res = await fetch(
-      `https://www.bmf-steuerrechner.de/interface/2023Version1.xhtml?code=ext2023&LZZ=1&RE4=${RE4}&STKL=${STKL}`
+      `https://www.bmf-steuerrechner.de/interface/2023Version1.xhtml?code=ext2023&LZZ=1&RE4=${RE4}&STKL=${STKL}`,
+      // {
+      //   headers: {
+      //     'Content-Type': 'text/xml;charset=UTF-8',
+      //     'Access-Control-Allow-Origin': '*',
+      //   }
+      // }
     );
 
     // The API return XML
