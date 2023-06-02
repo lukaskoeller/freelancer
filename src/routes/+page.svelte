@@ -1,11 +1,13 @@
 <script lang="ts">
-	const TAXAPI = '/api/incomeTax';
+	import type { PageData } from './$types';
 
 	let workDays: number = 198;
 	let workHours: number = 7.5;
 	let salary: number = 50;
 	let insuranceCosts: number = 600 * 12;
-	let incomeTax: number = 0;
+
+	export let data: PageData;
+	let incomeTax: number = data?.incomeTax ?? 0;
 
 	let billingBasis: 'daylie' | 'hourly' = 'hourly';
 	let businessCostsItems = [
@@ -32,19 +34,12 @@
 	$: income = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(
 		calculatedSalary * workDays - businessCosts - incomeTax - insuranceCosts
 	);
-
-	const getTaxHandler = async () => {
-		const RE4 = (calculatedSalary * workDays - businessCosts) * 100; //needs to be converted to EUR-Cents
-		const STKL = '1'; // ToDo: "Steuerklasse" could be implemented
-
-		const res = await fetch(`${TAXAPI}?RE4=${RE4}&STKL=${STKL}`);
-		const { lstlzz } = await res.json();
-		incomeTax = lstlzz / 100; //needs to be converted to EUR
-	};
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<svelte:head>
+	<title>Freelancer</title>
+	<meta name="description" content="Freelance calculator" />
+</svelte:head>
 
 <fieldset>
 	<legend>User input</legend>
@@ -122,12 +117,17 @@
 		Betriebskosten. Mehr dazu steht bei Github.
 	</details>
 
-	<label for="incomeTax">Income Tax</label>
-	<button on:click={getTaxHandler}>Steuer berechnen</button>
-	<input type="number" bind:value={incomeTax} id="incomeTax" />
-	<details>
-		Auf deine Einnahmen abzüglich Betriebskosten musst du Einkommenssteuer bezahlen.
-	</details>
+	<form method="GET">
+		<label for="incomeTax">Income Tax</label>
+		<button type="submit">Steuer berechnen</button>
+		<input type="number" bind:value={incomeTax} name="incomeTax" id="incomeTax" />
+		<input type="hidden" bind:value={calculatedSalary} name="calculatedSalary" />
+		<input type="hidden" bind:value={workDays} name="workDays" />
+		<input type="hidden" bind:value={businessCosts} name="businessCosts" />
+		<details>
+			Auf deine Einnahmen abzüglich Betriebskosten musst du Einkommenssteuer bezahlen.
+		</details>
+	</form>
 
 	<label for="insuranceCosts">Versicherungskosten pro Jahr</label>
 	<input type="number" bind:value={insuranceCosts} id="insuranceCosts" />

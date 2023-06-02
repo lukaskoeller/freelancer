@@ -2,7 +2,7 @@
 
 > 💡 The following is some sort of field report for freelancers. Since a lot of this stuff only applies to the German market, this report is initially only available in German. Feel free to request an other language or ideally submit a PR.
 
-# Wie hoch ist mein Stundenlohn?
+## Wie hoch ist mein Stundenlohn?
 
 Um herauszufinden wie hoch der eigene Stundenlohn mindestens sein muss, müssen folgende Dinge betrachtet werden:
 
@@ -15,7 +15,7 @@ Stundenlöhne werden meistens _ohne_ Umsatzsteuer (Netto) angegeben. Ist der Stu
 
 Aber eins nach dem anderen...
 
-## Wie viele Tage im Jahr und Stunden pro Woche kannst du arbeiten?
+### Wie viele Tage im Jahr und Stunden pro Woche kannst du arbeiten?
 
 Als Arbeitnehmer stellt man sich eine solche Frage fast nie. Als Freiberufler ist es aber enorm wichtig zu wissen, wie viele tatsächliche Arbeitstage im Jahr zu erwarten sind. Dazu folgende Beispielrechnung:
 
@@ -31,13 +31,13 @@ Als Arbeitnehmer stellt man sich eine solche Frage fast nie. Als Freiberufler is
 
 Das ergibt **200 tatsächliche Arbeitstage** pro Kalenderjahr.
 
-## Welche Betriebsausgaben (steuerlich berücksichtigte Kosten) habe ich?
+### Welche Betriebsausgaben (steuerlich berücksichtigte Kosten) habe ich?
 
 Einige Kosten die du hast um dein Geschäft zu ermöglichen können als Betriebsaufgaben erfasst werden. Wenn Ausgaben als solche erfasst werden, veringern sie die zu versteuernden Einnahmen und somit die Steuerlast. Folgende Beispielrechnung um den Sachverhalt zu verdeutlichen.
 
-Angenommen du verdienst 100€ (netto) und musstest für 10€ anreisen um dieses Geld zu verdienen. Wenn du diese 10€ <u>nicht</u> als Betriebskosten ausweist, so hast du 100€ Einnahmen und das Finanzamt möchte ca. 30% Einkommenssteuer (der genaue Satz ist für dieses Beispiel egal) davon haben. Wenn du jedoch die 10€ als Reisekosten deklarierst, wird das Finanzamt von deinen Einnahmen abziehen und lediglich von den übriggebliebenen 90€ 30% haben:
+Angenommen du verdienst 100€ (netto) und musstest für 10€ anreisen um dieses Geld zu verdienen. Wenn du diese 10€ _nicht_ als Betriebskosten ausweist, so hast du 100€ Einnahmen und das Finanzamt möchte ca. 30% Einkommenssteuer (der genaue Satz ist für dieses Beispiel egal) davon haben. Wenn du jedoch die 10€ als Reisekosten deklarierst, wird das Finanzamt von deinen Einnahmen abziehen und lediglich von den übriggebliebenen 90€ 30% haben:
 
-```
+```txt
 Ohne Ausweisung von Betriebskosten: (100€ - 30%) - 10€ = 60€ übrig
 Mit Ausweisung von Betriebskosten: (100€ - 10€) - 30% = 63€ übrig
 ```
@@ -48,11 +48,11 @@ Demnach ist es sinnvoll so viel Ausgaben wie möglich als Betriebskosten zu dekl
 - Mietkosten oder Arbeitszimmer
 - Auto, Bahncard,...
 
-## Wie hoch ist deine Steuerlast?
+### Wie hoch ist deine Steuerlast?
 
-Die Steuerlegung eines Freiberuflers ist im vergleich zu Kapitalgesellschaften recht einfach. So bist du als Freiberufler lediglich Einkommensteuerpflichtig. Die Höhe der Steuerzahlungen richtet sich nach der Höhe des Einkommens und kann hier berechnet werden: https://www.bmf-steuerrechner.de/ekst/eingabeformekst.xhtml
+Die Steuerlegung eines Freiberuflers ist im vergleich zu Kapitalgesellschaften recht einfach. So bist du als Freiberufler lediglich Einkommensteuerpflichtig. Die Höhe der Steuerzahlungen richtet sich nach der Höhe des Einkommens und kann hier berechnet werden: <https://www.bmf-steuerrechner.de/ekst/eingabeformekst.xhtml>
 
-## Welche Versicherungen benötigst du und wie sind deren Kosten?
+### Welche Versicherungen benötigst du und wie sind deren Kosten?
 
 Zwar könntest du Versicherungen zu den gängigen Fixkosten zählen allerdings hast du als Freiberufler hier mehr zu beachten als ein Arbeitnehmer. Daher solltest du notwendige Versicherungen unbedingt in die Berechnung des Stundenlohns einbziehen. Hier einige mögliche Versicherungen
 
@@ -65,9 +65,9 @@ Zwar könntest du Versicherungen zu den gängigen Fixkosten zählen allerdings h
 - Inhaltsversicherung -> Hardware gegen Schäden und Diebstahl versichern.
 - Cyberschutzversicherung -> Absicherung gegen Datenverlust, Hacking,... .
 
-## Beispielrechnung
+### Beispielrechnung
 
-```
+```txt
 Arbeitstage: 205
 Tagesarbeitsstunden: 38 / 5 = 7,6
 Stundenlohn: 70,00€ (netto, also ohne Umsatzsteuer)
@@ -87,18 +87,18 @@ Versicherungskosten = (910,00€ (Krankenversicherung) + 100,00€ (Berufsunfäh
 | Einkommenssteuer    | 25.182,00€  | 77.878,00€  |
 | Versicherungskosten | 13.920,00€  | 63.958,00€  |
 
-# Portale
+## Portale
 
 | Name          | Link                                   | Bermerkung |
 | ------------- | -------------------------------------- | ---------- |
-| Uplink        | https://uplink.tech/                   |            |
-| Freelancermap | https://www.freelancermap.de/          |            |
-| Gulp          | https://www.gulp.de/                   |            |
-| Freelance.de  | https://www.freelance.de/              |            |
-| Freelancer.de | https://www.freelancer.de/             |            |
-| Solcom        | https://www.solcom.de/de/projektportal |            |
+| Uplink        | <https://uplink.tech/>                   |            |
+| Freelancermap | <https://www.freelancermap.de/>          |            |
+| Gulp          | <https://www.gulp.de/>                   |            |
+| Freelance.de  | <https://www.freelance.de/>              |            |
+| Freelancer.de | <https://www.freelancer.de/>             |            |
+| Solcom        | <https://www.solcom.de/de/projektportal> |            |
 
-# Anheuer-Prozess
+## Anheuer-Prozess
 
 1. Sobald Profile auf den oben stehenden Portalen erstellt wurde rufen regelmäßig Personalvermittler an. Das Telefon klingt bei mir im Schnitt täglich oder alle 2 Tage. Es macht daher eine Sinn eine neue Telefonnummer spezielle für solche Anfragen zu kaufen. Beispielsweise eine Prepaid-Nummer. In den meisten Smartphones kann man mittlerweile 2 Simkarten verwenden.
 2. Diese fragen nach der grundsätzlichen Verfügbarkeit und gleichen dann Skills für das gesuchte Profil ab. Es handelt sich tatsächlich nur um einen ersten Abgleich. Oft wird man bspw. gefragt: "Auf eine Skala von 1 - 10, wobei 10 sehr gut ist: Wie gut sind Ihre Typescript Skills?" Oft muss die Bewertung nicht validiert werden, es macht aber Sinn hier nach bestem Gewissen zu antworten da die Anforderungen natürlich vom eigenentlichen Auftraggeber kommen.
@@ -122,14 +122,14 @@ Fragen die grundsätzlich gestellt werden können:
 - Wie groß ist das Team? Wie lange besteht das Team schon?
 - Gibt es Commit-/Code-Standards die eingesetzt werden?
 
-# Backlog
+## Backlog
 
 Umsatzsteuer die man in Rechnung stellt (also bekommt) nennt man **Umsatzsteuer**. Umsatzsteuer die man selbst bezahlt (also ausgibt) nennt man **Vorsteuer**. Vorsteuer und Umsatzsteuer werden miteinander verrechnet.
 
 **Soll-Besteuerung** -> Die Umsatzsteuer wird mit Rechnungstellung fällig.
 **Ist-Besteuerung** -> Die Umsatzsteuer wird bei Geldeingang fällig.
 
-# ToDos
+## ToDos
 
 - [x] Auswahl zwischen Stunden- und Tageslohn
 - [x] Betriebsausgaben als Summe, tabellarisch erfassen oder als Formel erfassen
