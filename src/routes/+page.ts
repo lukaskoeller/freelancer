@@ -34,12 +34,12 @@ export async function load({ fetch, url }) {
 
     const res = await fetch(
       `https://www.bmf-steuerrechner.de/interface/2023Version1.xhtml?code=ext2023&LZZ=1&RE4=${RE4}&STKL=${STKL}`,
-      // {
-      //   headers: {
-      //     'Content-Type': 'text/xml;charset=UTF-8',
-      //     'Access-Control-Allow-Origin': '*',
-      //   }
-      // }
+      {
+        headers: {
+          'Content-Type': 'text/xml;charset=UTF-8',
+          'Access-Control-Allow-Origin': 'https://calc-freelance.netlify.app',
+        }
+      }
     );
 
     // The API return XML
