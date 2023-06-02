@@ -11,6 +11,7 @@ export async function load({ fetch, url }) {
   const calculatedSalary = params.get('calculatedSalary');
   const workDays = params.get('workDays');
   const businessCosts = params.get('businessCosts');
+  const taxClass = params.get('taxClass');
 
   if (!calculatedSalary || !workDays || !businessCosts) return { incomeTax: 0 }
 
@@ -20,7 +21,7 @@ export async function load({ fetch, url }) {
     - Number(businessCosts)
   ) * 100; // needs to be converted to EUR-Cents
 
-  const STKL = '1'; // @todo: "Steuerklasse" could be implemented
+  const STKL = taxClass;
 
   try {
     /**

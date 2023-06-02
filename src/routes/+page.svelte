@@ -118,6 +118,25 @@
 	</details>
 
 	<form method="GET">
+		<label for="taxClass">Steuerklasse</label>
+		<select name="taxClass" id="taxClass">
+			<option value="1">Klasse 1</option>
+			<option value="2">Klasse 2</option>
+			<option value="3">Klasse 3</option>
+			<option value="4">Klasse 4</option>
+			<option value="5">Klasse 5</option>
+			<option value="6">Klasse 6</option>
+		</select>
+		<details>
+			In Deutschland gibt es sechs Steuerklassen (Lohnsteuerklassen) die das Finanzamt dem Arbeitnehmer zuordnet.
+			Die Steuerklasse richtet sich in erster Linie nach dem Familienstand.
+			<ul>
+				<li>Steuerklasse 1: Alleinstehende, ein Job, keine Kinder</li>
+				<li>Steuerklasse 2: Alleinerziehende, höherer Entlastungsbetrag</li>
+				<li>Steuerklassen 3 bis 5: Verheiratete, je nach Verdienst</li>
+				<li>Steuerklasse 6: Mehrere sozialversicherungspflichtige Jobs</li>
+			</ul>
+		</details>
 		<label for="incomeTax">Income Tax</label>
 		<button type="submit">Steuer berechnen</button>
 		<input type="number" bind:value={incomeTax} name="incomeTax" id="incomeTax" />
