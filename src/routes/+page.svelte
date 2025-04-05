@@ -6,9 +6,9 @@
 
 	let workDays = $state(198);
 	let workHours = $state(7.5);
-	let salary = $state(50);
+	let salary = $state(80);
 	let insuranceCosts = $state(600 * 12);
-	let incomeTax = $state(form?.wageTax.value);
+	let incomeTax = $state(form?.wageTax.value ?? 0);
 
 	type TBusinessCostsItem = {
 		value: string;
@@ -48,153 +48,413 @@
 	/>
 </svelte:head>
 
-<h1>Lohnt sich Freelancing</h1>
-<form>
-	<label for="workDays">Arbeitstage im Jahr</label>
-	<input type="number" min="0" step="1" bind:value={workDays} id="workDays" />
-	<details>
-		<summary>Herleitung</summary>
-		Im Durchschnitt arbeitet ein/e Deutsche/r 198 Tage im Jahr. Von 365 Kalendertagen sind beispielsweise
-		folgende Tage abzuziehen: 104 Tage Wochenende 📅, 11 Feiertage 🎉, 14 krank 🤒, 10 Tage 👨‍🍼🤱, 28
-		Urlaub 🌴 = 198 Tage
-	</details>
-	<fieldset>
-		<legend>Abrechnungsmodell</legend>
-		<label>
-			<input type="radio" name="billingBasis" bind:group={billingBasis} value="hourly" />
-			Stündlich
-		</label>
-		<label>
-			<input type="radio" name="billingBasis" bind:group={billingBasis} value="daily" />
-			Täglich
-		</label>
-	</fieldset>
-	{#if billingBasis === 'hourly'}
-		<label for="workHours">Arbeitsstunden pro Tag</label>
-		<input type="number" min="0" step="0.1" bind:value={workHours} id="workHours" />
-		<details>
-			<summary>Hinweis</summary>
-			Du solltest vor Antritt deiner Tätigkeit dringend klären wie viele Wochenstunden von dir erwartet
-			werden bzw. du in abrufen kannst. Bei einem Vollzeit-Job kannst du mit 38 bis 40 Stunden pro Woche
-			rechnen.
-		</details>
-	{/if}
-	<label for="salary">{billingBasisLabel} (netto)</label>
-	<input type="number" min="0" step="0.01" bind:value={salary} id="salary" />
-	<details>
-		<summary>Erläuterung</summary>
-		{billingBasisLabel} ohne Umsatzsteuer. Davon ist meistens die Rede wenn über den {billingBasisLabel}
-		gesprochen wird.
-	</details>
-	<span>Betriebsausgeben pro Jahr</span>
-	<output name="result" for="@todo">{businessCosts}</output>
-	<table>
-		<thead>
-			<tr>
-				<th>Betriebsausgabe</th>
-				<th>Betrag (jährlich)</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each businessCostsItems as item, idx}
-				<tr>
-					<td>
-						<input
-							type="text"
-							name={item.formValueName}
-							id={item.formValueName}
-							bind:value={item.value}
-						/>
-					</td>
-					<td>
-						<input
-							type="number"
-							name={item.formAmountName}
-							id={item.formAmountName}
-							bind:value={item.amount}
-						/>
-					</td>
-				</tr>
-			{/each}
-		</tbody>
-	</table>
-	<button
-		onclick={() => {
-			businessCostsItems.push({
-				value: '',
-				amount: 0,
-				formValueName: `businessCostItem.${businessCostsItems.length}.name`,
-				formAmountName: `businessCostItem.${businessCostsItems.length}.amount`
-			});
-		}}
-	>
-		Betriebsausgabe hinzufügen
-	</button>
-	<details>
-		<summary>Erläuterung</summary>
-		Als Betriebsausgaben werden Kosten bezeichnet, die du hast um deine Arbeit auszuführen. Bist du Software
-		Entwickler? Dann brauchst du wahrscheinlich einen Computer. Aber auch Reisemittel sind Betriebskosten.
-		Mehr dazu steht bei Github.
-	</details>
-</form>
+<div class="grid">
+	<section class="hero nc-stack -far">
+		<div class="block nc-stack -far">
+			<h1 class="title">Freelancer. <span style="var(--color-brand-primary-base)">Selbstständigkeit finanziell durchgerechnet.</span></h1>
+		</div>
+		<h2 class="subtitle">
+			Rechne dir aus, ab wann die Selbstständigkeit oder ein Kleingewerbe finanziell mit deinem Job als Angestellter
+			mithalten kann.
+		</h2>
+	</section>
+	<div class="container">
+		<form method="POST" action="?/incomeTax">
+			<div class="nc-card">
+				<!-- COMPONENT-START: nc-fieldset -->
+				<fieldset class="nc-fieldset" aria-describedby="fieldset-standard-description">
+					<legend class="main-legend nc-legend nc-input-label">Arbeitsaufwand</legend>
+					<div class="nc-stack -far">
+						<!-- COMPONENT-START: nc-input-field -->
+						<div class="nc-input-field">
+							<label for="workDays" class="nc-stack">
+								<span class="nc-input-label">Arbeitstage im Jahr</span>
+								<span class="nc-hint">Als Richtwert kannst du von 198 Tagen ausgehen</span>
+								<!-- <span class="nc-input-error">Render errors here if there is an issue with the input.</span> -->
+							</label>
+							<input
+								id="workDays"
+								class="nc-input"
+								aria-required="true"
+								bind:value={workDays}
+								autocomplete="off"
+								type="number"
+								min="0"
+								step="1"
+							/>
+						</div>
+						<!-- COMPONENT-END: nc-input-field -->
+						<!-- <details>
+							<summary>Herleitung</summary>
+							Im Durchschnitt arbeitet ein/e Deutsche/r 198 Tage im Jahr. Von 365 Kalendertagen sind beispielsweise
+							folgende Tage abzuziehen: 104 Tage Wochenende 📅, 11 Feiertage 🎉, 14 krank 🤒, 10 Tage 👨‍🍼🤱, 28
+							Urlaub 🌴 = 198 Tage
+						</details> -->
+						<!-- COMPONENT-START: nc-radio-field -->
+						<fieldset class="nc-fieldset nc-input-field nc-radio-field">
+							<legend class="nc-legend nc-stack">
+								<span class="nc-input-label">Abrechnungsmodell</span>
+								<!-- <span class="nc-input-error"
+									>Render errors here if there is an issue with the input.</span
+								> -->
+							</legend>
+							<!-- Options can be multiple -->
+							<div class="nc-checkbox-wrapper nc-input-field">
+								<label for="radio-option-1" class="nc-stack" data-label>
+									<span class="nc-input-label">Stündlich</span>
+								</label>
+								<input
+									data-input
+									id="billingBasis-hourly"
+									class="nc-input-radio"
+									type="radio"
+									value="hourly"
+									name="billingBasis"
+									bind:group={billingBasis}
+								/>
+							</div>
+							<div class="nc-checkbox-wrapper nc-input-field">
+								<label for="radio-option-2" class="nc-stack" data-label>
+									<span class="nc-input-label">Täglich</span>
+								</label>
+								<input
+									data-input
+									id="billingBasis-daily"
+									class="nc-input-radio"
+									type="radio"
+									value="daily"
+									name="billingBasis"
+									bind:group={billingBasis}
+								/>
+							</div>
+							<!-- End Options -->
+						</fieldset>
+						<!-- COMPONENT-END: nc-input-field -->
+						<!-- COMPONENT-START: nc-input-field -->
+						{#if billingBasis === 'hourly'}
+							<div class="nc-input-field">
+								<label for="workHours" class="nc-stack">
+									<span class="nc-input-label">Arbeitsstunden pro Tag</span>
+									<span class="nc-hint"
+										>Das entspricht {workHours * 5} Stunde{workHours * 5 === 1 ? '' : 'n'} pro Arbeitswoche</span
+									>
+									<!-- <span class="nc-input-error"
+										>Render errors here if there is an issue with the input.</span
+									> -->
+								</label>
+								<input
+									id="workHours"
+									bind:value={workHours}
+									class="nc-input"
+									aria-required="true"
+									autocomplete=""
+									type="number"
+									min="0"
+									max="24"
+									step="0.5"
+								/>
+								<!-- <details>
+									<summary>Hinweis</summary>
+									Du solltest vor Antritt deiner Tätigkeit dringend klären wie viele Wochenstunden von
+									dir erwartet werden bzw. du abrufen kannst. Bei einem Vollzeit-Job kannst du mit 38 bis
+									40 Stunden pro Woche rechnen.
+								</details> -->
+							</div>
+							<!-- COMPONENT-END: nc-input-field -->
+						{/if}
+					</div>
+				</fieldset>
+				<!-- COMPONENT-END: nc-fieldset -->
+			</div>
+			<div class="nc-card">
+				<!-- COMPONENT-START: nc-fieldset -->
+				<fieldset class="nc-fieldset" aria-describedby="fieldset-standard-description">
+					<legend class="main-legend nc-legend nc-input-label">Einnahmen & Ausgaben</legend>
+					<div class="nc-stack -far">
+						<!-- COMPONENT-START: nc-input-field -->
+						<div class="nc-input-field">
+							<label for="salary" class="nc-stack">
+								<span class="nc-input-label">{billingBasisLabel} (netto)</span>
+								<span class="nc-hint">{billingBasisLabel} ohne Umsatzsteuer</span>
+								<!-- <span class="nc-input-error"
+									>Render errors here if there is an issue with the input.</span
+								> -->
+							</label>
+							<input
+								id="salary"
+								bind:value={salary}
+								class="nc-input"
+								aria-required="true"
+								autocomplete=""
+								type="number"
+								min="0"
+								step="1"
+							/>
+						</div>
+						<!-- COMPONENT-END: nc-input-field -->
+						<div class="nc-input-field">
+							<span class="nc-input-label">Betriebsausgaben pro Jahr</span>
+							<table>
+								<thead>
+									<tr>
+										<th>Betriebsausgabe</th>
+										<th>Betrag (jährlich)</th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each businessCostsItems as item, idx}
+										<tr>
+											<td>
+												{item.value}
+											</td>
+											<td>
+												{formatCurrency(item.amount)}
+											</td>
+										</tr>
+									{/each}
+								</tbody>
+								<tfoot>
+									<tr>
+										<td></td>
+										<td>
+											<strong>
+												<output
+													aria-label="Summe Betriebsausgaben"
+													name="result"
+													for={businessCostsItems.map((item) => item.formValueName).join(' ')}
+													>{formatCurrency(businessCosts)}</output
+												>
+											</strong>
+										</td>
+									</tr>
+									<tr>
+										<td> @todo </td>
+									</tr>
+								</tfoot>
+							</table>
+							<button
+								onclick={() => {
+									businessCostsItems.push({
+										value: '',
+										amount: 0,
+										formValueName: `businessCostItem.${businessCostsItems.length}.name`,
+										formAmountName: `businessCostItem.${businessCostsItems.length}.amount`
+									});
+								}}
+							>
+								Betriebsausgabe hinzufügen
+							</button>
+							<!-- <details>
+								<summary>Erläuterung</summary>
+								Als Betriebsausgaben werden Kosten bezeichnet, die du hast um deine Arbeit auszuführen. Bist du
+								Software Entwickler? Dann brauchst du wahrscheinlich einen Computer. Aber auch Reisemittel sind
+								Betriebskosten. Mehr dazu steht bei Github.
+							</details> -->
+						</div>
+					</div>
+				</fieldset>
+				<!-- COMPONENT-END: nc-fieldset -->
+			</div>
+			<div class="nc-card">
+				<!-- COMPONENT-START: nc-fieldset -->
+				<fieldset class="nc-fieldset" aria-describedby="fieldset-standard-description">
+					<legend class="main-legend nc-legend nc-input-label">Steuern</legend>
+					<div class="nc-stack -far">
+						<!-- COMPONENT-START: nc-input-field: Textarea -->
+						<div class="nc-input-field">
+							<label for="taxClass" class="nc-stack">
+								<span class="nc-input-label">Steuerklasse</span>
+							</label>
+							<select class="nc-select" id="taxClass" name="taxClass" aria-required={true}>
+								<option value="1">Klasse 1</option>
+								<option value="2">Klasse 2</option>
+								<option value="3" selected>Klasse 3</option>
+								<option value="4">Klasse 4</option>
+								<option value="5">Klasse 5</option>
+								<option value="6">Klasse 6</option>
+							</select>
+							<!-- <details>
+							<summary>Hinweis zu Steuerklassen</summary>
+							In Deutschland gibt es sechs Steuerklassen (Lohnsteuerklassen) die das Finanzamt dem Arbeitnehmer
+							zuordnet. Die Steuerklasse richtet sich in erster Linie nach dem Familienstand.
+							<ul>
+								<li>Steuerklasse 1: Alleinstehende, ein Job, keine Kinder</li>
+								<li>Steuerklasse 2: Alleinerziehende, höherer Entlastungsbetrag</li>
+								<li>Steuerklassen 3 bis 5: Verheiratete, je nach Verdienst</li>
+								<li>Steuerklasse 6: Mehrere sozialversicherungspflichtige Jobs</li>
+							</ul>
+						</details> -->
+						</div>
+						<!-- COMPONENT-END: nc-input-field: Textarea -->
+						<input type="hidden" bind:value={calculatedSalary} name="calculatedSalary" />
+						<input type="hidden" bind:value={workDays} name="workDays" />
+						<input type="hidden" bind:value={businessCosts} name="businessCosts" />
+						<!-- <details>
+							Auf deine Einnahmen abzüglich Betriebskosten musst du Einkommenssteuer bezahlen.
+						</details> -->
+						<!-- COMPONENT-START: nc-input-field -->
+						<div class="nc-input-field">
+							<label for="insuranceCosts" class="nc-stack">
+								<span class="nc-input-label">Versicherungskosten pro Jahr</span>
+								<span class="nc-hint"
+									>Zum Beispiel Krankversicherung, Berufshaftpflichtversicherung, etc.</span
+								>
+								<!-- <span class="nc-input-error"
+									>Render errors here if there is an issue with the input.</span
+								> -->
+							</label>
+							<input
+								id="insuranceCosts"
+								bind:value={insuranceCosts}
+								class="nc-input"
+								aria-required="true"
+								autocomplete="off"
+								type="number"
+								min="0"
+							/>
+						</div>
+						<!-- COMPONENT-END: nc-input-field -->
+					</div>
+				</fieldset>
+				<!-- COMPONENT-END: nc-fieldset -->
+			</div>
+			<button class="nc-button" type="submit">Berechnen</button>
+		</form>
+	</div>
+	<div class="results">
+		<div class="nc-card">
+			<div class="nc-cluster">
+				<div>
+					<div class="nc-input-label kpi-label">Tagesverdienst</div>
+					<output class="kpi" aria-describedby="dailyTurnover" for="dailyTurnover">
+						{formatCurrency(dailyTurnover)}
+					</output>
+				</div>
 
-<form method="POST" action="?/incomeTax">
-	<label for="taxClass">Steuerklasse</label>
-	<select name="taxClass" id="taxClass">
-		<option value="1">Klasse 1</option>
-		<option value="2">Klasse 2</option>
-		<option value="3">Klasse 3</option>
-		<option value="4">Klasse 4</option>
-		<option value="5">Klasse 5</option>
-		<option value="6">Klasse 6</option>
-	</select>
-	<details>
-		<summary>Hinweis zu Steuerklassen</summary>
-		In Deutschland gibt es sechs Steuerklassen (Lohnsteuerklassen) die das Finanzamt dem Arbeitnehmer
-		zuordnet. Die Steuerklasse richtet sich in erster Linie nach dem Familienstand.
-		<ul>
-			<li>Steuerklasse 1: Alleinstehende, ein Job, keine Kinder</li>
-			<li>Steuerklasse 2: Alleinerziehende, höherer Entlastungsbetrag</li>
-			<li>Steuerklassen 3 bis 5: Verheiratete, je nach Verdienst</li>
-			<li>Steuerklasse 6: Mehrere sozialversicherungspflichtige Jobs</li>
-		</ul>
-	</details>
-	<label for="incomeTax">Income Tax</label>
-	<input type="number" bind:value={incomeTax} name="incomeTax" id="incomeTax" />
-	<button type="submit">Steuer berechnen</button>
-	<input type="hidden" bind:value={calculatedSalary} name="calculatedSalary" />
-	<input type="hidden" bind:value={workDays} name="workDays" />
-	<input type="hidden" bind:value={businessCosts} name="businessCosts" />
-	<details>
-		Auf deine Einnahmen abzüglich Betriebskosten musst du Einkommenssteuer bezahlen.
-	</details>
-</form>
+				<div>
+					<div class="nc-input-label kpi-label">Jahresverdienst</div>
+					<output class="kpi" for="yearlyTurnover">{formatCurrency(yearlyTurnover)}</output>
+				</div>
 
-<label for="insuranceCosts">Versicherungskosten pro Jahr</label>
-<input type="number" bind:value={insuranceCosts} id="insuranceCosts" />
-<details>
-	Hier können alle Arte von Versicherungen erfassten werden. Der sicher größte Posten ist die
-	Krankversicherung.
-</details>
+				<div>
+					<div class="nc-input-label kpi-label">Einkommen vor Steuer</div>
+					<output class="kpi" for="incomeBeforeTax">{formatCurrency(incomeBeforeTax)}</output>
+				</div>
 
-<span>Tagesverdienst</span>
-<output for="dailyTurnover">{formatCurrency(dailyTurnover)}</output>
+				<div>
+					<div class="nc-input-label kpi-label">Einkommen nach Steuer</div>
+					<output class="kpi" for="income">{formatCurrency(income)}</output>
+				</div>
 
-<span>Jahresverdienst</span>
-<output for="yearlyTurnover">{formatCurrency(yearlyTurnover)}</output>
+				{#if form?.wageTax.value && form.usedAllowance.value}
+					<div>
+						<div class="nc-input-label kpi-label">{form?.wageTax.labelShort}</div>
+						<output class="kpi">{formatCurrency(form?.wageTax.value)}</output>
+					</div>
+					<div>
+						<div class="nc-input-label kpi-label">{form?.usedAllowance.labelShort}</div>
+						<output class="kpi">{formatCurrency(form?.usedAllowance.value)}</output>
+					</div>
+				{/if}
+			</div>
+		</div>
+	</div>
+</div>
 
-<span>Einkommen vor Steuer</span>
-<output for="incomeBeforeTax">{formatCurrency(incomeBeforeTax)}</output>
+<style>
+	@custom-media --md-n-above (width >= 768px);
+	@custom-media --lg-n-above (width >= 1024px);
+	@custom-media --xl-n-above (width >= 1440px);
 
-<span>Einkommen nach Steuer</span>
-<output for="income">{formatCurrency(income)}</output>
+	.grid {
+		padding: var(--spacing-base);
+		display: grid;
+		gap: var(--spacing-base);
+		grid:
+			'intro' auto
+			'form' auto
+			'results' auto
+			/ 1fr;
 
-{#if form?.wageTax.value && form.usedAllowance.value}
-	<dl>
-		<dt>{form?.wageTax.labelShort}</dt>
-		<dd>{formatCurrency(form?.wageTax.value)}</dd>
+		@media (--md-n-above) {
+			gap: var(--spacing-far);
+			grid:
+				'intro form' auto
+				'results form' auto
+				/ 1fr 1fr;
+		}
 
-		<dt>{form?.usedAllowance.labelShort}</dt>
-		<dd>{formatCurrency(form?.usedAllowance.value)}</dd>
-	</dl>
-{/if}
+		@media (--lg-n-above) {
+			grid:
+				'intro form' auto
+				'results form' auto
+				/ 1.5fr 1fr;
+		}
+
+		@media (--xl-n-above) {
+			grid:
+				'intro form' auto
+				'results form' auto
+				/ 2.5fr 1fr;
+		}
+
+		
+	}
+
+	.hero {
+		grid-area: intro;
+	}
+
+	.block {
+		inline-size: min(80ch, 100%);
+		padding: var(--spacing-base);
+		border-radius: var(--border-radius-large);
+		background-color: var(--color-brand-primary-surface);
+
+		@media (--md-n-above) {
+			padding: var(--spacing-far);
+		}
+	}
+
+	.title {
+		color: var(--color-text-base);
+		/* text-box: trim-both cap text; */
+
+		& span {
+			opacity: 0.6;
+		}
+	}
+
+	.subtitle {
+		display: block;
+		inline-size: min(26ch, 100%);
+		line-height: var(--line-height-medium);
+		font-size: var(--font-size-large);
+	}
+	.container {
+		grid-area: form;
+		inline-size: min(56ch, 100%);
+		margin-inline: auto;
+		display: grid;
+		gap: var(--spacing-base);
+	}
+
+	.results {
+		grid-area: results;
+	}
+
+	.main-legend {
+		font-weight: var(--font-weight-strong);
+		font-size: var(--font-size-large);
+	}
+
+	.kpi-label {
+		display: block;
+		inline-size: fit-content;
+	}
+	.kpi {
+		font-size: var(--font-size-large);
+		font-weight: var(--font-weight-strong);
+		color: var(--color-primary);
+	}
+</style>
