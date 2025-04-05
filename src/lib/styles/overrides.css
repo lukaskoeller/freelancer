@@ -1,0 +1,12 @@
+label:has(+ input[type="radio"]) .nc-input-label {
+  font-weight: var(--font-weight-default);
+}
+
+input[type="radio"] {
+    --current-background: transparent;
+
+    &:checked::before {
+        transform: scale(0.8) translateY(0%);
+        background-color: var(--color-text-base);
+    }
+}
