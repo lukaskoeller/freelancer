@@ -302,7 +302,7 @@
 		var(--lightness-max) calc(var(--c-surface-dark) * 0.1) var(--h-surface-dark)
 	);
 	--l-border-light: 0.87;
-	--c-border-light: 0.03;
+	--c-border-light: 0.01;
 	--h-border-light: var(--h-brand-primary);
 	--scale-border-light: 1.025;
 	--color-border-base-light: oklch(
@@ -325,7 +325,7 @@
 			calc(var(--transparency-weaker) / 10)
 	);
 	--l-border-dark: 0.3;
-	--c-border-dark: 0.05;
+	--c-border-dark: 0.03;
 	--scale-border-dark: 0.98;
 	--h-border-dark: var(--h-brand-primary);
 	--color-border-base-dark: oklch(var(--l-border-dark) var(--c-border-dark) var(--h-border-dark));
