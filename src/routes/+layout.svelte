@@ -7,6 +7,7 @@
     import "@nordcode/ui/components/forms"
     import "@nordcode/ui/components/inputs"
     import "@nordcode/ui/components/buttons"
+    import "@nordcode/ui/components/gallery"
     import "$lib/styles/overrides.css"
 
     let { children } = $props();

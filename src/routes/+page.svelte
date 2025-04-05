@@ -49,17 +49,23 @@
 </svelte:head>
 
 <div class="grid">
-	<section class="hero nc-stack -far">
+	<div class="hero nc-stack -far">
 		<div class="block nc-stack -far">
-			<h1 class="title">Freelancer. <span style="var(--color-brand-primary-base)">Selbstständigkeit finanziell durchgerechnet.</span></h1>
+			<h1 class="title">
+				Freelancer. <span style="var(--color-brand-primary-base)"
+					>Selbstständigkeit finanziell durchgerechnet.</span
+				>
+			</h1>
 		</div>
+	</div>
+	<div class="intro">
 		<h2 class="subtitle">
-			Rechne dir aus, ab wann die Selbstständigkeit oder ein Kleingewerbe finanziell mit deinem Job als Angestellter
-			mithalten kann.
+			Rechne dir aus, ab wann die Selbstständigkeit oder ein Kleingewerbe finanziell mit deinem
+			Job als Angestellter mithalten kann.
 		</h2>
-	</section>
+	</div>
 	<div class="container">
-		<form method="POST" action="?/incomeTax">
+		<form method="POST" action="?/incomeTax" class="nc-stack">
 			<div class="nc-card">
 				<!-- COMPONENT-START: nc-fieldset -->
 				<fieldset class="nc-fieldset" aria-describedby="fieldset-standard-description">
@@ -320,22 +326,8 @@
 			</div>
 			<button class="nc-button" type="submit">Berechnen</button>
 		</form>
-	</div>
-	<div class="results">
-		<div class="nc-card">
-			<div class="nc-cluster">
-				<div>
-					<div class="nc-input-label kpi-label">Tagesverdienst</div>
-					<output class="kpi" aria-describedby="dailyTurnover" for="dailyTurnover">
-						{formatCurrency(dailyTurnover)}
-					</output>
-				</div>
-
-				<div>
-					<div class="nc-input-label kpi-label">Jahresverdienst</div>
-					<output class="kpi" for="yearlyTurnover">{formatCurrency(yearlyTurnover)}</output>
-				</div>
-
+		<div class="results">
+			<div class="nc-gallery -far">
 				<div>
 					<div class="nc-input-label kpi-label">Einkommen vor Steuer</div>
 					<output class="kpi" for="incomeBeforeTax">{formatCurrency(incomeBeforeTax)}</output>
@@ -346,16 +338,27 @@
 					<output class="kpi" for="income">{formatCurrency(income)}</output>
 				</div>
 
-				{#if form?.wageTax.value && form.usedAllowance.value}
-					<div>
-						<div class="nc-input-label kpi-label">{form?.wageTax.labelShort}</div>
-						<output class="kpi">{formatCurrency(form?.wageTax.value)}</output>
-					</div>
-					<div>
-						<div class="nc-input-label kpi-label">{form?.usedAllowance.labelShort}</div>
-						<output class="kpi">{formatCurrency(form?.usedAllowance.value)}</output>
-					</div>
-				{/if}
+				<details>
+					<summary>Weitere Kennzahlen</summary>
+					<dl>
+						<dt id="dailyTurnoverLabel">Tagesverdienst</dt>
+						<dd>
+							<output aria-describedby="dailyTurnoverLabel" for="dailyTurnover">
+								{formatCurrency(dailyTurnover)}
+							</output>
+						</dd>
+						{#if form?.wageTax.value && form.usedAllowance.value}
+							<dt id="wageTax">{form?.wageTax.labelShort}</dt>
+							<dd>
+								<output aria-describedby="wageTax">{formatCurrency(form?.wageTax.value)}</output>
+							</dd>
+							<dt id="usedAllowance">{form?.usedAllowance.labelShort}</dt>
+							<dd>
+								<output>{formatCurrency(form?.usedAllowance.value)}</output>
+							</dd>
+						{/if}
+					</dl>
+				</details>
 			</div>
 		</div>
 	</div>
@@ -367,41 +370,30 @@
 	@custom-media --xl-n-above (width >= 1440px);
 
 	.grid {
+		margin-inline: auto;
 		padding: var(--spacing-base);
 		display: grid;
 		gap: var(--spacing-base);
 		grid:
+			'hero' auto
 			'intro' auto
 			'form' auto
-			'results' auto
 			/ 1fr;
 
-		@media (--md-n-above) {
+		@media (--lg-n-above) {
 			gap: var(--spacing-far);
 			grid:
-				'intro form' auto
-				'results form' auto
+				'hero intro' auto
+				'form form' auto
 				/ 1fr 1fr;
 		}
-
-		@media (--lg-n-above) {
-			grid:
-				'intro form' auto
-				'results form' auto
-				/ 1.5fr 1fr;
-		}
-
-		@media (--xl-n-above) {
-			grid:
-				'intro form' auto
-				'results form' auto
-				/ 2.5fr 1fr;
-		}
-
-		
 	}
 
 	.hero {
+		grid-area: hero;
+	}
+
+	.intro {
 		grid-area: intro;
 	}
 
@@ -433,19 +425,37 @@
 	}
 	.container {
 		grid-area: form;
-		inline-size: min(56ch, 100%);
-		margin-inline: auto;
+		inline-size: 100%;
 		display: grid;
 		gap: var(--spacing-base);
-	}
+		align-items: start;
 
-	.results {
-		grid-area: results;
+		@media (--lg-n-above) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: var(--spacing-far);
+		}
 	}
 
 	.main-legend {
 		font-weight: var(--font-weight-strong);
 		font-size: var(--font-size-large);
+	}
+
+	.results {
+		inline-size: 100%;
+		position: sticky;
+		bottom: var(--spacing-base);
+		border-radius: var(--border-radius-large);
+		background-color: color-mix(in lch, var(--color-surface-base), transparent 60%);
+		backdrop-filter: blur(var(--spacing-base));
+		padding: var(--spacing-base);
+		border: var(--border-width-thin) solid var(--color-border-base);
+
+		@media (--lg-n-above) {
+			top: var(--spacing-base);
+			bottom: auto;
+		}
 	}
 
 	.kpi-label {
