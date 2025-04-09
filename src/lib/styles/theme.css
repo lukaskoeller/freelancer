@@ -1,5 +1,3 @@
-/* https://ui.nordcode.agency/borders-shadows/?styles=%7B%0A++%22fontFamilyMono%22%3A+%22monospace%22%2C%0A++%22fontFamilySans%22%3A+%22system-ui%2C+sans-serif%22%2C%0A++%22fontFamilySerif%22%3A+%22serif%22%2C%0A++%22fontFamilyDefault%22%3A+%22sans%22%2C%0A++%22fontSizeScale%22%3A+%221.6%22%2C%0A++%22useCustomFontSizes%22%3A+false%2C%0A++%22fontSizeSmallest%22%3A+0.391%2C%0A++%22fontSizeSmall%22%3A+0.625%2C%0A++%22fontSizeBase%22%3A+1%2C%0A++%22fontSizeLarge%22%3A+1.6%2C%0A++%22fontSizeLargest%22%3A+2.56%2C%0A++%22fontSizeDisplay%22%3A+4.096%2C%0A++%22fontSizeUnit%22%3A+%22rem%22%2C%0A++%22lineHeightLarge%22%3A+1.85%2C%0A++%22lineHeightBase%22%3A+1.55%2C%0A++%22lineHeightSmall%22%3A+1.1%2C%0A++%22trackingTight%22%3A+-0.04%2C%0A++%22trackingStandard%22%3A+0%2C%0A++%22trackingWide%22%3A+0.06%2C%0A++%22fontWeightHeading%22%3A+600%2C%0A++%22fontWeightDefault%22%3A+400%2C%0A++%22fontWeightActive%22%3A+600%2C%0A++%22fontWeightStrong%22%3A+600%2C%0A++%22measureLarge%22%3A+88%2C%0A++%22measureBase%22%3A+72%2C%0A++%22measureSmall%22%3A+44%2C%0A++%22spacingTiny%22%3A+0.125%2C%0A++%22spacingNearest%22%3A+0.25%2C%0A++%22spacingNear%22%3A+0.5%2C%0A++%22spacingBase%22%3A+%221%22%2C%0A++%22spacingFar%22%3A+2%2C%0A++%22spacingFarthest%22%3A+4%2C%0A++%22spacingScale%22%3A+%222%22%2C%0A++%22borderRadiusNone%22%3A+0%2C%0A++%22borderWidthThin%22%3A+1%2C%0A++%22borderWidthMedium%22%3A+2%2C%0A++%22borderWidthThick%22%3A+4%2C%0A++%22borderWidthScale%22%3A+2%2C%0A++%22borderRadiusSmall%22%3A+2%2C%0A++%22borderRadiusMedium%22%3A+4%2C%0A++%22borderRadiusLarge%22%3A+8%2C%0A++%22borderRadiusScale%22%3A+2%2C%0A++%22shadowConfigDistanceBase%22%3A+1%2C%0A++%22shadowConfigDistanceScaleFactor%22%3A+1.7%2C%0A++%22shadowConfigBlurScaleFactor%22%3A+2%2C%0A++%22shadowConfigStartTransparency%22%3A+0.3%2C%0A++%22shadowConfigTransparencyScale%22%3A+0.85%2C%0A++%22shadowConfigSpreadMax%22%3A+-5%2C%0A++%22shadowConfigXOffsetFactor%22%3A+0%2C%0A++%22lightShadowColorLightness%22%3A+85%2C%0A++%22darkShadowColorLightness%22%3A+30%2C%0A++%22lightShadowColorChroma%22%3A+0.01%2C%0A++%22darkShadowColorChroma%22%3A+0.01%2C%0A++%22lightnessMax%22%3A+1%2C%0A++%22lightnessMin%22%3A+0.05%2C%0A++%22neutralChromaScale%22%3A+0%2C%0A++%22transparencyWeaker%22%3A+0.4%2C%0A++%22primaryHue%22%3A+116%2C%0A++%22primaryLightness%22%3A+56%2C%0A++%22primaryLightnessDark%22%3A+75%2C%0A++%22primaryChroma%22%3A+0.6%2C%0A++%22secondaryHue%22%3A+91%2C%0A++%22secondaryLightness%22%3A+53%2C%0A++%22secondaryLightnessDark%22%3A+80%2C%0A++%22secondaryChroma%22%3A+0.135%2C%0A++%22useSecondaryColorForFG%22%3A+false%2C%0A++%22useSecondaryColorForBG%22%3A+false%2C%0A++%22useSecondaryColorForBorders%22%3A+false%2C%0A++%22lightNeutralChromaFG%22%3A+0.5%2C%0A++%22lightNeutralChromaBG%22%3A+0%2C%0A++%22lightNeutralChromaBorder%22%3A+0.03%2C%0A++%22lightNeutralTextLightness%22%3A+40%2C%0A++%22lightNeutralSurfaceLightness%22%3A+100%2C%0A++%22lightNeutralBorderLightness%22%3A+87%2C%0A++%22lightTextLightnessScaleFactor%22%3A+1.25%2C%0A++%22lightSurfaceLightnessScaleFactor%22%3A+1%2C%0A++%22lightBorderLightnessScaleFactor%22%3A+1.025%2C%0A++%22darkNeutralChromaFG%22%3A+0.05%2C%0A++%22darkNeutralChromaBG%22%3A+0.05%2C%0A++%22darkNeutralChromaBorder%22%3A+0.05%2C%0A++%22darkNeutralTextLightness%22%3A+88%2C%0A++%22darkNeutralSurfaceLightness%22%3A+15%2C%0A++%22darkNeutralBorderLightness%22%3A+30%2C%0A++%22darkTextLightnessScaleFactor%22%3A+0.88%2C%0A++%22darkSurfaceLightnessScaleFactor%22%3A+1.3%2C%0A++%22darkBorderLightnessScaleFactor%22%3A+0.98%0A%7D */
-
 :root {
 	/* Typography */
 
@@ -33,7 +31,7 @@
 	--font-size-display: 4.096rem;
 
 	/* Transparency */
-	--transparency-weaker: 0.4;
+	--transparency-weaker: 0.2;
 
 	/* Spacing */
 
@@ -89,23 +87,23 @@
 		0px 69.76px 139.52px -5px color-mix(in oklch, var(--shadow-color), transparent 91.83%);
 	/* Light Theme */
 
-	--shadow-color-light: oklch(85% 0.01 116);
-	--shadow-color-light-lch: 85% 0.01 116;
+	--shadow-color-light: oklch(85% 0.01 121);
+	--shadow-color-light-lch: 85% 0.01 121;
 
 	/* Dark Theme */
 
-	--shadow-color-dark: oklch(30% 0.01 116);
-	--shadow-color-dark-lch: 30% 0.01 116;
+	--shadow-color-dark: oklch(30% 0.01 121);
+	--shadow-color-dark-lch: 30% 0.01 121;
 
 	--lightness-max: 1;
-	--lightness-min: 0.05;
+	--lightness-min: 0;
 	--lightness-diff: calc(var(--lightness-max) - var(--lightness-min));
 	--lightness-contrast-cutoff: calc(var(--lightness-min) + var(--lightness-diff) * 0.5 + 0.05);
-	--neutral-chroma-scale: 0;
-	--transparency-weaker: 0.4;
-	--c-brand-primary: 1;
-	--h-brand-primary: 127;
-	--l-brand-primary-light: 0.70;
+	--neutral-chroma-scale: 1;
+	--transparency-weaker: 0.2;
+	--c-brand-primary: 0.93;
+	--h-brand-primary: 121;
+	--l-brand-primary-light: 0.81;
 	--color-brand-primary-base-light: oklch(
 		var(--l-brand-primary-light) var(--c-brand-primary) var(--h-brand-primary)
 	);
@@ -135,7 +133,7 @@
 		var(--l-brand-primary-light) var(--c-brand-primary) var(--h-brand-primary) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-brand-primary-dark: 0.7;
+	--l-brand-primary-dark: 0.86;
 	--color-brand-primary-base-dark: oklch(
 		var(--l-brand-primary-dark) var(--c-brand-primary) var(--h-brand-primary)
 	);
@@ -162,9 +160,9 @@
 		var(--l-brand-primary-dark) var(--c-brand-primary) var(--h-brand-primary) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--c-brand-secondary: 0.11;
-	--h-brand-secondary: 100;
-	--l-brand-secondary-light: 0.75;
+	--c-brand-secondary: 0.135;
+	--h-brand-secondary: 91;
+	--l-brand-secondary-light: 0.53;
 	--color-brand-secondary-base-light: oklch(
 		var(--l-brand-secondary-light) var(--c-brand-secondary) var(--h-brand-secondary)
 	);
@@ -194,7 +192,7 @@
 		var(--l-brand-secondary-light) var(--c-brand-secondary) var(--h-brand-secondary) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-brand-secondary-dark: 0.75;
+	--l-brand-secondary-dark: 0.8;
 	--color-brand-secondary-base-dark: oklch(
 		var(--l-brand-secondary-dark) var(--c-brand-secondary) var(--h-brand-secondary)
 	);
@@ -224,10 +222,10 @@
 		var(--l-brand-secondary-dark) var(--c-brand-secondary) var(--h-brand-secondary) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-text-light: 0.4;
-	--c-text-light: 0.12;
+	--l-text-light: 0.3;
+	--c-text-light: 0.02;
 	--h-text-light: var(--h-brand-primary);
-	--scale-text-light: 1.35;
+	--scale-text-light: 1.4;
 	--color-text-base-light: oklch(var(--l-text-light) var(--c-text-light) var(--h-text-light));
 	--color-text-muted-light: oklch(
 		calc(var(--l-text-light) * var(--scale-text-light))
@@ -245,10 +243,10 @@
 		var(--l-text-light) var(--c-text-light) var(--h-text-light) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-text-dark: 0.88;
-	--c-text-dark: 0.05;
+	--l-text-dark: 0.97;
+	--c-text-dark: 0.02;
 	--h-text-dark: var(--h-brand-primary);
-	--scale-text-dark: 0.88;
+	--scale-text-dark: 0.8;
 	--color-text-base-dark: oklch(var(--l-text-dark) var(--c-text-dark) var(--h-text-dark));
 	--color-text-muted-dark: oklch(
 		calc(var(--l-text-dark) * var(--scale-text-dark))
@@ -266,7 +264,7 @@
 	--l-surface-light: 1;
 	--c-surface-light: 0;
 	--h-surface-light: var(--h-brand-primary);
-	--scale-surface-light: 1;
+	--scale-surface-light: 0.97;
 	--color-surface-base-light: oklch(
 		var(--l-surface-light) var(--c-surface-light) var(--h-surface-light)
 	);
@@ -282,8 +280,8 @@
 	--color-surface-emphasis-light: oklch(
 		var(--lightness-min) var(--c-surface-light) var(--h-surface-light)
 	);
-	--l-surface-dark: 0.15;
-	--c-surface-dark: 0.05;
+	--l-surface-dark: 0.18;
+	--c-surface-dark: 0.003;
 	--h-surface-dark: var(--h-brand-primary);
 	--scale-surface-dark: 1.3;
 	--color-surface-base-dark: oklch(
@@ -301,10 +299,10 @@
 	--color-surface-emphasis-dark: oklch(
 		var(--lightness-max) calc(var(--c-surface-dark) * 0.1) var(--h-surface-dark)
 	);
-	--l-border-light: 0.87;
-	--c-border-light: 0.01;
+	--l-border-light: 0.86;
+	--c-border-light: 0.002;
 	--h-border-light: var(--h-brand-primary);
-	--scale-border-light: 1.025;
+	--scale-border-light: 1.04;
 	--color-border-base-light: oklch(
 		var(--l-border-light) var(--c-border-light) var(--h-border-light)
 	);
@@ -324,9 +322,9 @@
 		var(--l-border-light) var(--c-border-light) var(--h-border-light) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-border-dark: 0.3;
-	--c-border-dark: 0.03;
-	--scale-border-dark: 0.98;
+	--l-border-dark: 0.36;
+	--c-border-dark: 0.002;
+	--scale-border-dark: 0.85;
 	--h-border-dark: var(--h-brand-primary);
 	--color-border-base-dark: oklch(var(--l-border-dark) var(--c-border-dark) var(--h-border-dark));
 	--color-border-muted-dark: oklch(
@@ -345,9 +343,9 @@
 		var(--l-border-dark) var(--c-border-dark) var(--h-border-dark) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--c-status-success: 0.6;
+	--c-status-success: 0.93;
 	--h-status-success: 142;
-	--l-status-success-light: 0.56;
+	--l-status-success-light: 0.81;
 	--color-status-success-base-light: oklch(
 		var(--l-status-success-light) var(--c-status-success) var(--h-status-success)
 	);
@@ -377,7 +375,7 @@
 		var(--l-status-success-light) var(--c-status-success) var(--h-status-success) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-status-success-dark: 0.75;
+	--l-status-success-dark: 0.86;
 	--color-status-success-base-dark: oklch(
 		var(--l-status-success-dark) var(--c-status-success) var(--h-status-success)
 	);
@@ -407,9 +405,9 @@
 		var(--l-status-success-dark) var(--c-status-success) var(--h-status-success) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--c-status-warning: 0.6;
+	--c-status-warning: 0.93;
 	--h-status-warning: 97;
-	--l-status-warning-light: 0.56;
+	--l-status-warning-light: 0.81;
 	--color-status-warning-base-light: oklch(
 		var(--l-status-warning-light) var(--c-status-warning) var(--h-status-warning)
 	);
@@ -439,7 +437,7 @@
 		var(--l-status-warning-light) var(--c-status-warning) var(--h-status-warning) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-status-warning-dark: 0.75;
+	--l-status-warning-dark: 0.86;
 	--color-status-warning-base-dark: oklch(
 		var(--l-status-warning-dark) var(--c-status-warning) var(--h-status-warning)
 	);
@@ -469,9 +467,9 @@
 		var(--l-status-warning-dark) var(--c-status-warning) var(--h-status-warning) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--c-status-danger: 0.6;
+	--c-status-danger: 0.93;
 	--h-status-danger: 32;
-	--l-status-danger-light: 0.56;
+	--l-status-danger-light: 0.81;
 	--color-status-danger-base-light: oklch(
 		var(--l-status-danger-light) var(--c-status-danger) var(--h-status-danger)
 	);
@@ -501,7 +499,7 @@
 		var(--l-status-danger-light) var(--c-status-danger) var(--h-status-danger) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-status-danger-dark: 0.75;
+	--l-status-danger-dark: 0.86;
 	--color-status-danger-base-dark: oklch(
 		var(--l-status-danger-dark) var(--c-status-danger) var(--h-status-danger)
 	);
@@ -528,9 +526,9 @@
 		var(--l-status-danger-dark) var(--c-status-danger) var(--h-status-danger) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--c-status-info: 0.6;
+	--c-status-info: 0.93;
 	--h-status-info: 245;
-	--l-status-info-light: 0.56;
+	--l-status-info-light: 0.81;
 	--color-status-info-base-light: oklch(
 		var(--l-status-info-light) var(--c-status-info) var(--h-status-info)
 	);
@@ -556,7 +554,7 @@
 		var(--l-status-info-light) var(--c-status-info) var(--h-status-info) /
 			calc(var(--transparency-weaker) / 10)
 	);
-	--l-status-info-dark: 0.75;
+	--l-status-info-dark: 0.86;
 	--color-status-info-base-dark: oklch(
 		var(--l-status-info-dark) var(--c-status-info) var(--h-status-info)
 	);

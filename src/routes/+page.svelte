@@ -49,20 +49,34 @@
 </svelte:head>
 
 <div class="grid">
-	<div class="hero nc-stack -far">
-		<div class="block nc-stack -far">
+	<div class="hero">
+		<div class="inner-hero">
 			<h1 class="title">
-				Freelancer. <span style="var(--color-brand-primary-base)"
-					>Selbstständigkeit finanziell durchgerechnet.</span
-				>
+				<span style="color: var(--color-brand-primary-base)">Freelancer.</span> Selbstständigkeit finanziell
+				durchgerechnet.
 			</h1>
+			<div class="text nc-flow">
+				<p>
+					<strong>
+						Rechne dir aus, ab wann die Selbstständigkeit oder ein Kleingewerbe finanziell mit
+						deinem Job als Angestellter mithalten kann.
+					</strong>
+				</p>
+				<p>
+					Der Schritt in die Selbstständigkeit ist für viele nicht leicht. Viele befinden sich in
+					einem unbefristeten Arbeitsverhältnis. Hinzu kommen finanzielle und private
+					Verpflichtungen wie eine Familie oder ein Kredit. Meist geht mit der Vollzeitbeschäftigung
+					auch ein gewisser Lebensstandard einher, den man nicht so einfach aufgeben möchte.
+				</p>
+				<p>
+					Dieser Rechner hilft dir dabei eine bessere Vorstellung von deinen Einnahmen und Ausgaben
+					zu bekommen. Dies geschieht zum Beispiel anhand dem von dir veranschlagten Stunden- oder
+					Tagessatz. Auch die Arbeitszeit und Steuern werden berücksichtigt. So kannst du besser
+					vergleichen, welche Bedingungen erfüllt sein müssen, damit du mit deiner Selbstständigkeit
+					deinen Lebensstandard halten kannst.
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="intro">
-		<h2 class="subtitle">
-			Rechne dir aus, ab wann die Selbstständigkeit oder ein Kleingewerbe finanziell mit deinem
-			Job als Angestellter mithalten kann.
-		</h2>
 	</div>
 	<div class="container">
 		<form method="POST" action="?/incomeTax" class="nc-stack">
@@ -327,7 +341,7 @@
 			<button class="nc-button" type="submit">Berechnen</button>
 		</form>
 		<div class="results">
-			<div class="nc-gallery -far">
+			<!-- <div class="nc-cluster">
 				<div>
 					<div class="nc-input-label kpi-label">Einkommen vor Steuer</div>
 					<output class="kpi" for="incomeBeforeTax">{formatCurrency(incomeBeforeTax)}</output>
@@ -337,95 +351,119 @@
 					<div class="nc-input-label kpi-label">Einkommen nach Steuer</div>
 					<output class="kpi" for="income">{formatCurrency(income)}</output>
 				</div>
-
-				<details>
-					<summary>Weitere Kennzahlen</summary>
-					<dl>
-						<dt id="dailyTurnoverLabel">Tagesverdienst</dt>
-						<dd>
-							<output aria-describedby="dailyTurnoverLabel" for="dailyTurnover">
-								{formatCurrency(dailyTurnover)}
-							</output>
-						</dd>
-						{#if form?.wageTax.value && form.usedAllowance.value}
-							<dt id="wageTax">{form?.wageTax.labelShort}</dt>
-							<dd>
-								<output aria-describedby="wageTax">{formatCurrency(form?.wageTax.value)}</output>
-							</dd>
-							<dt id="usedAllowance">{form?.usedAllowance.labelShort}</dt>
-							<dd>
-								<output>{formatCurrency(form?.usedAllowance.value)}</output>
-							</dd>
-						{/if}
-					</dl>
-				</details>
-			</div>
+			</div> -->
+			<dl class="calculation">
+				<dt id="yearly-turnover">Einkommen (jährlich)</dt>
+				<dd>
+					<output aria-describedby="yearly-turnover" for="incomeBeforeTax">
+						{formatCurrency(yearlyTurnover)}
+					</output>
+				</dd>
+				<dt class="text-ident" id="business-costs">Betriebskosten</dt>
+				<dd>
+					<output aria-describedby="business-costs">
+						{formatCurrency(businessCosts * -1)}
+					</output>
+				</dd>
+				<dt id="income-before-tax">Einkommen vor Steuern</dt>
+				<dd>
+					<output aria-describedby="income-before-tax">
+						{formatCurrency(incomeBeforeTax)}
+					</output>
+				</dd>
+				<dt class="text-ident" id="income-tax">Lohnsteuer</dt>
+				<dd>
+					<output aria-describedby="income-tax">
+						{formatCurrency(incomeTax * -1)}
+					</output>
+				</dd>
+				<dt class="text-ident" id="insurance-costs">Versicherungskosten</dt>
+				<dd>
+					<output aria-describedby="insurance-costs">
+						{formatCurrency(insuranceCosts * -1)}
+					</output>
+				</dd>
+				<dt id="income-after-tax">Einkommen nach Steuern</dt>
+				<dd>
+					<output aria-describedby="income-after-tax">
+						{formatCurrency(income)}
+					</output>
+				</dd>
+			</dl>
 		</div>
 	</div>
 </div>
 
 <style>
+	@custom-media --sm-n-above (width >= 480px);
 	@custom-media --md-n-above (width >= 768px);
 	@custom-media --lg-n-above (width >= 1024px);
 	@custom-media --xl-n-above (width >= 1440px);
+
+	:root {
+		--root-width: min(90rem, 100%);
+	}
 
 	.grid {
 		margin-inline: auto;
 		padding: var(--spacing-base);
 		display: grid;
 		gap: var(--spacing-base);
-		grid:
-			'hero' auto
-			'intro' auto
-			'form' auto
-			/ 1fr;
 
 		@media (--lg-n-above) {
 			gap: var(--spacing-far);
-			grid:
-				'hero intro' auto
-				'form form' auto
-				/ 1fr 1fr;
 		}
 	}
 
 	.hero {
-		grid-area: hero;
+		min-block-size: 50vh;
+		min-block-size: 50svh;
+		background-color: var(--color-surface-base);
+		padding-inline: var(--spacing-far);
+		padding-block: var(--spacing-farthest);
+		border-radius: calc(var(--border-radius-large) * 3);
 	}
 
-	.intro {
-		grid-area: intro;
-	}
-
-	.block {
-		inline-size: min(80ch, 100%);
-		padding: var(--spacing-base);
-		border-radius: var(--border-radius-large);
-		background-color: var(--color-brand-primary-surface);
-
-		@media (--md-n-above) {
-			padding: var(--spacing-far);
-		}
+	.inner-hero {
+		inline-size: var(--root-width);
+		margin-inline: auto;
+		display: flex;
+		justify-content: space-between;
+		gap: var(--spacing-farthest);
+		flex-wrap: wrap;
 	}
 
 	.title {
+		flex: 1 1 14ch;
 		color: var(--color-text-base);
-		/* text-box: trim-both cap text; */
+		font-size: var(--font-size-large);
+
+		@media (--sm-n-above) {
+			font-size: var(--font-size-largest);
+		}
+
+		@media (--md-n-above) {
+			font-size: var(--font-size-display);
+		}
 
 		& span {
 			opacity: 0.6;
 		}
 	}
 
-	.subtitle {
-		display: block;
-		inline-size: min(26ch, 100%);
-		line-height: var(--line-height-medium);
-		font-size: var(--font-size-large);
+	.text {
+		flex: 1 1 70ch;
+		column-count: 1;
+		column-gap: var(--spacing-farthest);
+
+		@media (--md-n-above) {
+			column-count: 2;
+		}
 	}
+
 	.container {
-		grid-area: form;
-		inline-size: 100%;
+		inline-size: var(--root-width);
+		margin-inline: auto;
 		display: grid;
 		gap: var(--spacing-base);
 		align-items: start;
@@ -443,9 +481,10 @@
 	}
 
 	.results {
-		inline-size: 100%;
 		position: sticky;
 		bottom: var(--spacing-base);
+		margin-inline: auto;
+		inline-size: min(40ch, 100%);
 		border-radius: var(--border-radius-large);
 		background-color: color-mix(in lch, var(--color-surface-base), transparent 60%);
 		backdrop-filter: blur(var(--spacing-base));
@@ -455,7 +494,44 @@
 		@media (--lg-n-above) {
 			top: var(--spacing-base);
 			bottom: auto;
+			inline-size: 100%;
 		}
+	}
+
+	.calculation {
+		--measure-base: auto;
+
+		display: grid;
+		grid-auto-columns: 1fr;
+		font-size: var(--font-size-small);
+
+		@media (--lg-n-above) {
+			font-size: var(--font-size-base);
+		}
+
+		& dt {
+			grid-column: 1;
+			padding-block: 0.2lh;
+
+			&:not(:last-of-type) {
+				border-bottom: var(--border-width-thin) solid var(--color-border-muted);
+			}
+		}
+
+		& dd {
+			grid-column: 2;
+			text-align: end;
+			padding-block: 0.2lh;
+
+			&:not(:last-of-type) {
+				border-bottom: var(--border-width-thin) solid var(--color-border-muted);
+			}
+		}
+	}
+
+	.text-ident {
+		font-weight: var(--font-weight-default);
+		padding-inline-start: 2ch;
 	}
 
 	.kpi-label {
