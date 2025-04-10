@@ -4,6 +4,8 @@
 
 	let { data, form }: PageProps = $props();
 
+	let isExpanded = $state(false);
+
 	let workDays = $state(198);
 	let workHours = $state(7.5);
 	let salary = $state(80);
@@ -352,44 +354,73 @@
 					<output class="kpi" for="income">{formatCurrency(income)}</output>
 				</div>
 			</div> -->
-			<dl class="calculation">
-				<dt id="yearly-turnover">Einkommen (jährlich)</dt>
-				<dd>
-					<output aria-describedby="yearly-turnover" for="incomeBeforeTax">
-						{formatCurrency(yearlyTurnover)}
-					</output>
-				</dd>
-				<dt class="text-ident" id="business-costs">Betriebskosten</dt>
-				<dd>
-					<output aria-describedby="business-costs">
-						{formatCurrency(businessCosts * -1)}
-					</output>
-				</dd>
-				<dt id="income-before-tax">Einkommen vor Steuern</dt>
-				<dd>
-					<output aria-describedby="income-before-tax">
-						{formatCurrency(incomeBeforeTax)}
-					</output>
-				</dd>
-				<dt class="text-ident" id="income-tax">Lohnsteuer</dt>
-				<dd>
-					<output aria-describedby="income-tax">
-						{formatCurrency(incomeTax * -1)}
-					</output>
-				</dd>
-				<dt class="text-ident" id="insurance-costs">Versicherungskosten</dt>
-				<dd>
-					<output aria-describedby="insurance-costs">
-						{formatCurrency(insuranceCosts * -1)}
-					</output>
-				</dd>
-				<dt id="income-after-tax">Einkommen nach Steuern</dt>
-				<dd>
-					<output aria-describedby="income-after-tax">
-						{formatCurrency(income)}
-					</output>
-				</dd>
+			<dl>
+				<div class={`calculation -inner ${isExpanded ? '' : '-hidden'}`}>
+					<dt id="yearly-turnover">Einkommen (jährlich)</dt>
+					<dd>
+						<output aria-describedby="yearly-turnover" for="incomeBeforeTax">
+							{formatCurrency(yearlyTurnover)}
+						</output>
+					</dd>
+					<dt class="text-ident" id="business-costs">Betriebskosten</dt>
+					<dd>
+						<output aria-describedby="business-costs">
+							{formatCurrency(businessCosts * -1)}
+						</output>
+					</dd>
+					<dt id="income-before-tax">Einkommen vor Steuern</dt>
+					<dd>
+						<output aria-describedby="income-before-tax">
+							{formatCurrency(incomeBeforeTax)}
+						</output>
+					</dd>
+					<dt class="text-ident" id="income-tax">Lohnsteuer</dt>
+					<dd>
+						<output aria-describedby="income-tax">
+							{formatCurrency(incomeTax * -1)}
+						</output>
+					</dd>
+					<dt class="text-ident" id="insurance-costs">Versicherungskosten</dt>
+					<dd>
+						<output aria-describedby="insurance-costs">
+							{formatCurrency(insuranceCosts * -1)}
+						</output>
+					</dd>
+				</div>
+				<div class="calculation">
+					<dt id="income-after-tax">Einkommen nach Steuern</dt>
+					<dd>
+						<output aria-describedby="income-after-tax">
+							{formatCurrency(income)}
+						</output>
+					</dd>
+				</div>
 			</dl>
+			<button
+				class="expand-button"
+				onclick={() => {
+					isExpanded = !isExpanded;
+				}}
+				aria-label={isExpanded ? 'Berechnung verstecken' : 'Berechnung zeigen'}
+			>
+				<svg
+					style={`transform: ${isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'}; transition: transform 0.2s`}
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M12 5l0 14" />
+					<path d="M18 11l-6 -6" />
+					<path d="M6 11l6 -6" />
+				</svg>
+			</button>
 		</div>
 	</div>
 </div>
@@ -483,8 +514,12 @@
 	.results {
 		position: sticky;
 		bottom: var(--spacing-base);
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: var(--spacing-base);
 		margin-inline: auto;
-		inline-size: min(40ch, 100%);
+		inline-size: min(44ch, 100%);
 		border-radius: var(--border-radius-large);
 		background-color: color-mix(in lch, var(--color-surface-base), transparent 60%);
 		backdrop-filter: blur(var(--spacing-base));
@@ -496,10 +531,21 @@
 			bottom: auto;
 			inline-size: 100%;
 		}
+
+		& dl {
+			flex: 1;
+		}
 	}
 
 	.calculation {
+		--_duration: 0.2s;
 		--measure-base: auto;
+
+		overflow: clip;
+
+		@media (prefers-reduced-motion: no-preference) {
+			interpolate-size: allow-keywords;
+		}
 
 		display: grid;
 		grid-auto-columns: 1fr;
@@ -509,12 +555,32 @@
 			font-size: var(--font-size-base);
 		}
 
+		&.-inner {
+			opacity: 1;
+			block-size: auto;
+			transition:
+				content-visibility var(--_duration) allow-discrete,
+				opacity var(--_duration),
+				block-size var(--_duration);
+
+			&.-hidden {
+				opacity: 0;
+				block-size: 0;
+				overflow-y: clip;
+
+				@media (--lg-n-above) {
+					opacity: 1;
+					block-size: auto;
+				}
+			}
+		}
+
 		& dt {
 			grid-column: 1;
 			padding-block: 0.2lh;
 
-			&:not(:last-of-type) {
-				border-bottom: var(--border-width-thin) solid var(--color-border-muted);
+			&:not(:only-of-type) {
+				border-block-end: var(--border-width-thin) solid var(--color-border-muted);
 			}
 		}
 
@@ -523,8 +589,8 @@
 			text-align: end;
 			padding-block: 0.2lh;
 
-			&:not(:last-of-type) {
-				border-bottom: var(--border-width-thin) solid var(--color-border-muted);
+			&:not(:only-of-type) {
+				border-block-end: var(--border-width-thin) solid var(--color-border-muted);
 			}
 		}
 	}
@@ -532,6 +598,20 @@
 	.text-ident {
 		font-weight: var(--font-weight-default);
 		padding-inline-start: 2ch;
+		color: var(--color-text-subtle);
+
+		& + dd {
+			color: var(--color-text-subtle);
+		}
+	}
+
+	.expand-button {
+		border-radius: 100%;
+		aspect-ratio: 1;
+
+		@media (--lg-n-above) {
+			display: none;
+		}
 	}
 
 	.kpi-label {
