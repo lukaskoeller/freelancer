@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { formatCurrency } from '$lib';
+	import { getTaxData } from './getTaxData';
 	import type { PageProps } from './$types';
 
-	let { data, form }: PageProps = $props();
+	// let { form: taxData }: PageProps = $props();
+
+	let taxData = $state<Awaited<ReturnType<typeof getTaxData>>>();
 
 	let isExpanded = $state(false);
 
@@ -10,7 +13,8 @@
 	let workHours = $state(7.5);
 	let salary = $state(80);
 	let insuranceCosts = $state(600 * 12);
-	let incomeTax = $state(form?.wageTax.value ?? 0);
+	let incomeTax = $state(taxData?.wageTax.value ?? 0);
+	let taxClass = $state('3');
 
 	type TBusinessCostsItem = {
 		value: string;
@@ -35,11 +39,23 @@
 
 	let calculatedSalary: number = $derived(billingBasis === 'hourly' ? workHours * salary : salary);
 
-	const dailyTurnover = $derived(calculatedSalary);
 	const yearlyTurnover = $derived(calculatedSalary * workDays);
 	const incomeBeforeTax = $derived(calculatedSalary * workDays - businessCosts);
 	const income = $derived(calculatedSalary * workDays - businessCosts - incomeTax - insuranceCosts);
 	const billingBasisLabel = $derived(billingBasis === 'hourly' ? 'Stundenlohn' : 'Tageslohn');
+
+	$effect(() => {
+		const setTaxData = async () => {
+			const response = await getTaxData(
+				taxClass,
+				Number(calculatedSalary),
+				Number(workDays),
+				Number(businessCosts)
+			);
+			taxData = response;
+		};
+		setTaxData();
+	});
 </script>
 
 <svelte:head>
@@ -122,7 +138,7 @@
 							</legend>
 							<!-- Options can be multiple -->
 							<div class="nc-checkbox-wrapper nc-input-field">
-								<label for="radio-option-1" class="nc-stack" data-label>
+								<label for="billingBasis-hourly" class="nc-stack" data-label>
 									<span class="nc-input-label">Stündlich</span>
 								</label>
 								<input
@@ -136,7 +152,7 @@
 								/>
 							</div>
 							<div class="nc-checkbox-wrapper nc-input-field">
-								<label for="radio-option-2" class="nc-stack" data-label>
+								<label for="billingBasis-daily" class="nc-stack" data-label>
 									<span class="nc-input-label">Täglich</span>
 								</label>
 								<input
@@ -287,10 +303,16 @@
 							<label for="taxClass" class="nc-stack">
 								<span class="nc-input-label">Steuerklasse</span>
 							</label>
-							<select class="nc-select" id="taxClass" name="taxClass" aria-required={true}>
+							<select
+								bind:value={taxClass}
+								class="nc-select"
+								id="taxClass"
+								name="taxClass"
+								aria-required={true}
+							>
 								<option value="1">Klasse 1</option>
 								<option value="2">Klasse 2</option>
-								<option value="3" selected>Klasse 3</option>
+								<option value="3">Klasse 3</option>
 								<option value="4">Klasse 4</option>
 								<option value="5">Klasse 5</option>
 								<option value="6">Klasse 6</option>
