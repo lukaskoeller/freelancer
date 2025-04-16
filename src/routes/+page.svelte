@@ -561,8 +561,11 @@
 	</div>
 </div>
 <footer class="footer nc-box">
-	<div class="nc-cluster -far">
-		<span>Built by <a href="https://github.com/lukaskoeller">@lukaskoeller</a></span>
+		<span>
+			Built by <a href="https://github.com/lukaskoeller">@lukaskoeller</a>, based on
+			<a href="https://github.com/zeekrey/freelancer">zeekrey/freelancer</a>
+			and <a href="https://ui.nordcode.agency/">ui.nordcode.agency</a>
+		</span>
 		<a href="https://github.com/lukaskoeller/freelancer/issues">Give Feedback</a>
 </footer>
 
@@ -770,8 +773,12 @@
 	}
 
 	.footer {
+		inline-size: 100%;
 		display: flex;
-		justify-content: end;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: var(--spacing-far);
 		color: var(--color-text-subtle);
+		font-size: var(--font-size-small);
 	}
 </style>
