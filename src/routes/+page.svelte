@@ -123,7 +123,7 @@
 				};
 			}}
 			onchange={(e) => {
-				const form = (e.target as HTMLElement).closest("form") as HTMLFormElement;
+				const form = (e.target as HTMLElement).closest('form') as HTMLFormElement;
 				form.requestSubmit();
 			}}
 		>
@@ -560,6 +560,11 @@
 		</div>
 	</div>
 </div>
+<footer class="footer nc-box">
+	<div class="nc-cluster -far">
+		<span>Built by <a href="https://github.com/lukaskoeller">@lukaskoeller</a></span>
+		<a href="https://github.com/lukaskoeller/freelancer/issues">Give Feedback</a>
+</footer>
 
 <style>
 	@custom-media --sm-n-above (width >= 480px);
@@ -762,5 +767,11 @@
 		font-size: var(--font-size-large);
 		font-weight: var(--font-weight-strong);
 		color: var(--color-primary);
+	}
+
+	.footer {
+		display: flex;
+		justify-content: end;
+		color: var(--color-text-subtle);
 	}
 </style>
