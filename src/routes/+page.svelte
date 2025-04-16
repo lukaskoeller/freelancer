@@ -2,6 +2,7 @@
 	import { formatCurrency } from '$lib';
 	import { getTaxData } from './getTaxData';
 	import type { PageProps } from './$types';
+	import { SvelteMap } from 'svelte/reactivity';
 
 	// let { form: taxData }: PageProps = $props();
 
@@ -13,25 +14,42 @@
 	let workHours = $state(7.5);
 	let salary = $state(80);
 	let insuranceCosts = $state(600 * 12);
-	let incomeTax = $state(taxData?.wageTax.value ?? 0);
+	let incomeTax = $derived(taxData?.wageTax.value ?? 0);
 	let taxClass = $state('3');
 
 	type TBusinessCostsItem = {
 		value: string;
 		amount: number;
-		formValueName: `businessCostItem.${number}.name`;
+		formValueName: `businessCostItem.${number}.value`;
 		formAmountName: `businessCostItem.${number}.amount`;
 	};
 
 	let billingBasis: 'daily' | 'hourly' = $state('hourly');
-	let businessCostsItems: TBusinessCostsItem[] = $state([
-		{
-			value: 'Software Lizenzen (Office, eMail, etc.)',
-			amount: 12 * 25,
-			formValueName: `businessCostItem.0.name`,
-			formAmountName: `businessCostItem.0.amount`
-		}
-	]);
+
+	let showNewBusinessCostsItemError = $state(false);
+	let newBusinessCostsItem = $state<Pick<TBusinessCostsItem, 'value' | 'amount'>>({
+		value: '',
+		amount: 0
+	});
+	let businessCostsItemsMap: SvelteMap<TBusinessCostsItem['formValueName'], TBusinessCostsItem> =
+		$state(
+			new SvelteMap([
+				[
+					'businessCostItem.0.value',
+					{
+						value: 'Software Lizenzen (Office, eMail, etc.)',
+						amount: 12 * 25,
+						formValueName: 'businessCostItem.0.value',
+						formAmountName: 'businessCostItem.0.amount'
+					}
+				]
+			])
+		);
+
+	const businessCostsItems = $derived(Array.from(businessCostsItemsMap.values()));
+	$effect(() => {
+		console.log(businessCostsItemsMap);
+	});
 
 	let businessCosts: number = $derived(
 		businessCostsItems.reduce((prev, { amount }) => prev + amount, 0)
@@ -232,11 +250,12 @@
 						<!-- COMPONENT-END: nc-input-field -->
 						<div class="nc-input-field">
 							<span class="nc-input-label">Betriebsausgaben pro Jahr</span>
-							<table>
+							<table class="table">
 								<thead>
 									<tr>
 										<th>Betriebsausgabe</th>
 										<th>Betrag (jährlich)</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -248,12 +267,108 @@
 											<td>
 												{formatCurrency(item.amount)}
 											</td>
+											<td>
+												<button
+													class="nc-button -icon -small -muted"
+													type="button"
+													aria-label={`Betriebsausgabe "${item.value}" löschen`}
+													onclick={() => {
+														businessCostsItemsMap.delete(item.formValueName);
+													}}
+												>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="16"
+														height="16"
+														viewBox="0 0 24 24"
+														fill="none"
+														stroke="currentColor"
+														stroke-width="2"
+														stroke-linecap="round"
+														stroke-linejoin="round"
+														class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+														><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+															d="M4 7l16 0"
+														/><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path
+															d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+														/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg
+													>
+												</button>
+											</td>
 										</tr>
 									{/each}
-								</tbody>
-								<tfoot>
 									<tr>
-										<td></td>
+										<td>
+											{#if showNewBusinessCostsItemError}
+												<span class="nc-input-error">Bitte eine Betriebsausgabe angeben.</span>
+											{/if}
+											<input
+												class="nc-input -small"
+												type="text"
+												bind:value={newBusinessCostsItem.value}
+												name={`businessCostItem.${businessCostsItems.length}.value`}
+												aria-label={`Betriebsausgabe ${businessCostsItems.length}`}
+											/>
+										</td>
+										<td>
+											<input
+												class="nc-input -small"
+												style="inline-size: min(8ch, 100%)"
+												type="number"
+												bind:value={newBusinessCostsItem.amount}
+												name={`businessCostItem.${businessCostsItems.length}.amount`}
+												aria-label={`Betriebsausgabe ${businessCostsItems.length} Betrag`}
+											/>
+										</td>
+										<td>
+											<button
+												class="nc-button -icon -small -muted"
+												type="button"
+												aria-label={`Betriebsausgabe${newBusinessCostsItem.value ? ` "${newBusinessCostsItem.value}" ` : ' '}hinzufügen`}
+												onclick={() => {
+													if (!newBusinessCostsItem.value) {
+														showNewBusinessCostsItemError = true;
+														return;
+													}
+													showNewBusinessCostsItemError = false;
+													businessCostsItemsMap.set(
+														`businessCostItem.${businessCostsItems.length}.value`,
+														{
+															value: newBusinessCostsItem.value,
+															amount: newBusinessCostsItem.amount,
+															formValueName: `businessCostItem.${businessCostsItems.length}.value`,
+															formAmountName: `businessCostItem.${businessCostsItems.length}.amount`
+														}
+													);
+													// Reset `newBusinessCostsItem`
+													newBusinessCostsItem.value = '';
+													newBusinessCostsItem.amount = 0;
+												}}
+											>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="currentColor"
+													stroke-width="2"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													class="icon icon-tabler icons-tabler-outline icon-tabler-check"
+													><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+														d="M5 12l5 5l10 -10"
+													/></svg
+												>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+								<tfoot style="border-start: var(--border-width-medium) solid var(--color-border-base);">
+									<tr>
+										<td>
+											<strong>Summe</strong>
+										</td>
 										<td>
 											<strong>
 												<output
@@ -264,24 +379,10 @@
 												>
 											</strong>
 										</td>
-									</tr>
-									<tr>
-										<td> @todo </td>
+										<td></td>
 									</tr>
 								</tfoot>
 							</table>
-							<button
-								onclick={() => {
-									businessCostsItems.push({
-										value: '',
-										amount: 0,
-										formValueName: `businessCostItem.${businessCostsItems.length}.name`,
-										formAmountName: `businessCostItem.${businessCostsItems.length}.amount`
-									});
-								}}
-							>
-								Betriebsausgabe hinzufügen
-							</button>
 							<!-- <details>
 								<summary>Erläuterung</summary>
 								Als Betriebsausgaben werden Kosten bezeichnet, die du hast um deine Arbeit auszuführen. Bist du
@@ -531,6 +632,10 @@
 	.main-legend {
 		font-weight: var(--font-weight-strong);
 		font-size: var(--font-size-large);
+	}
+
+	.table {
+		font-size: var(--font-size-smallest);
 	}
 
 	.results {

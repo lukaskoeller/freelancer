@@ -10,3 +10,21 @@ input[type="radio"] {
         background-color: var(--color-text-base);
     }
 }
+
+td, th {
+  white-space: initial;
+}
+
+.nc-input.-small {
+  --button-height-base: 2rem;
+}
+
+.nc-input-error {
+  display: block;
+  font-size: var(--font-size-smallest);
+  margin-block-end: var(--spacing-nearest);
+
+  &::before {
+    display: none;
+  }
+}
