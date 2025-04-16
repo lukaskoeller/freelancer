@@ -3,10 +3,11 @@
 	import { getTaxData } from './getTaxData';
 	import type { PageProps } from './$types';
 	import { SvelteMap } from 'svelte/reactivity';
+	import { enhance } from '$app/forms';
 
-	// let { form: taxData }: PageProps = $props();
+	let { form: taxData }: PageProps = $props();
 
-	let taxData = $state<Awaited<ReturnType<typeof getTaxData>>>();
+	// let taxData = $state<Awaited<ReturnType<typeof getTaxData>>>();
 
 	let isExpanded = $state(false);
 
@@ -47,9 +48,6 @@
 		);
 
 	const businessCostsItems = $derived(Array.from(businessCostsItemsMap.values()));
-	$effect(() => {
-		console.log(businessCostsItemsMap);
-	});
 
 	let businessCosts: number = $derived(
 		businessCostsItems.reduce((prev, { amount }) => prev + amount, 0)
@@ -62,18 +60,18 @@
 	const income = $derived(calculatedSalary * workDays - businessCosts - incomeTax - insuranceCosts);
 	const billingBasisLabel = $derived(billingBasis === 'hourly' ? 'Stundenlohn' : 'Tageslohn');
 
-	$effect(() => {
-		const setTaxData = async () => {
-			const response = await getTaxData(
-				taxClass,
-				Number(calculatedSalary),
-				Number(workDays),
-				Number(businessCosts)
-			);
-			taxData = response;
-		};
-		setTaxData();
-	});
+	// $effect(() => {
+	// 	const setTaxData = async () => {
+	// 		const response = await getTaxData(
+	// 			taxClass,
+	// 			Number(calculatedSalary),
+	// 			Number(workDays),
+	// 			Number(businessCosts)
+	// 		);
+	// 		taxData = response;
+	// 	};
+	// 	setTaxData();
+	// });
 </script>
 
 <svelte:head>
@@ -115,7 +113,20 @@
 		</div>
 	</div>
 	<div class="container">
-		<form method="POST" action="?/incomeTax" class="nc-stack">
+		<form
+			method="POST"
+			action="?/incomeTax"
+			class="nc-stack"
+			use:enhance={() => {
+				return async ({ update }) => {
+					update({ reset: false });
+				};
+			}}
+			onchange={(e) => {
+				const form = (e.target as HTMLElement).closest("form") as HTMLFormElement;
+				form.requestSubmit();
+			}}
+		>
 			<div class="nc-card">
 				<!-- COMPONENT-START: nc-fieldset -->
 				<fieldset class="nc-fieldset" aria-describedby="fieldset-standard-description">
@@ -364,7 +375,9 @@
 										</td>
 									</tr>
 								</tbody>
-								<tfoot style="border-start: var(--border-width-medium) solid var(--color-border-base);">
+								<tfoot
+									style="border-start: var(--border-width-medium) solid var(--color-border-base);"
+								>
 									<tr>
 										<td>
 											<strong>Summe</strong>
@@ -459,11 +472,11 @@
 							/>
 						</div>
 						<!-- COMPONENT-END: nc-input-field -->
+						<button class="nc-button -muted -small" type="submit">Lohnsteuer berechnen</button>
 					</div>
 				</fieldset>
 				<!-- COMPONENT-END: nc-fieldset -->
 			</div>
-			<button class="nc-button" type="submit">Berechnen</button>
 		</form>
 		<div class="results">
 			<!-- <div class="nc-cluster">
